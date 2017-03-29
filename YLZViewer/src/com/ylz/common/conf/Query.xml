@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylz.common.mapper.QueryMapper">
+	<!-- <cache readOnly="true" flushInterval="1800000"/> -->
+	
+	<select id="findCaseHistory" parameterType="PageQuery" resultType="PageQuery">
+		select v.exam_no examNo, v.sick_id sickId, v.pat_local_id patLocalId, v.exam_class examClass,
+		  v.perform_dept, v.exam_count examCount, v.name, v.sex, v.age, v.ic_card icCard, v.mi_card miCard,
+		  v.exam_status examStatus, v.image_count imageCount, v.report_status reportStatus,      
+		  v.inpatient_no inpatientNo, v.outpatient_no outpatientNo, v.bed_no bedNo,      
+		  v.exam_sub_class examSubClass, v.exam_mode examMode,
+		  v.scheduled_date||' '||v.scheduled_time scheduleTime, v.exam_date||' '||v.exam_time examTime,
+		  v.report_date reportDate,v.report_time reportTime, v.patient_source patientSource, v.req_physician reqPhysician,
+		  (select dept_name from dict_dept where dept_code=v.req_dept) reqDept, 
+		  v.report_no reportNo, v.reporter reporter,  v.affirm_reporter affirmReporter,
+		  v.affirm_date affirmDate,v.affirm_time affirmTime, 
+		  h.hospital_name hospitalName, v.hospital_code hospitalCode
+		from v_exam_patient_rpt v, dict_hospital h	
+		where v.hospital_code=h.hospital_code(+)		
+		<if test="hospitalCode!=null and hospitalCode!=''">
+			and v.hospital_code=#{hospitalCode,jdbcType=VARCHAR}	
+		</if>
+		<if test="examClass!=null and examClass!=''">
+			and v.exam_class=#{examClass,jdbcType=VARCHAR}
+		</if>
+		<if test="examSubClass!=null and examSubClass!=''">
+			and v.exam_sub_class=#{examSubClass,jdbcType=VARCHAR}
+		</if>
+		<if test="deptCode!=null and deptCode!=''">
+			and v.perform_dept=#{deptCode,jdbcType=VARCHAR}	
+		</if>
+		<if test="sickId!=null and sickId!=''">
+			and v.sick_id=#{sickId,jdbcType=VARCHAR}
+		</if>
+		<if test="isRelative==null or isRelative==false">						
+			<if test="examNo!=null and examNo!=''">
+				and v.exam_no=#{examNo,jdbcType=VARCHAR}
+			</if>
+		</if>
+		<if test="isRelative!=null and isRelative==true">						
+			<if test="examNo!=null and examNo!=''">
+				and v.exam_no!=#{examNo,jdbcType=VARCHAR}
+			</if>
+		</if>
+		<if test="reqDept!=null and reqDept!=''">
+			and v.req_dept=#{reqDept,jdbcType=VARCHAR}	
+		</if>
+		<if test="reqDepts!=null and reqDepts.size()>0">
+			and v.req_dept in
+			<foreach collection="reqDepts" open="(" close=")" separator="," item="it">
+			  #{it.deptCode,jdbcType=VARCHAR}
+			</foreach>
+		</if>
+		<if test="reqPhysician!=null and reqPhysician!=''">
+			and v.req_physician=#{reqPhysician,jdbcType=VARCHAR}	
+		</if>
+		<if test="patientSource!=null and patientSource!=''">
+			and v.patient_source=#{patientSource,jdbcType=VARCHAR}	
+		</if>
+		<if test="register!=null and register!=''">
+			and v.register=#{register,jdbcType=VARCHAR}	
+		</if>
+		<if test="patLocalId!=null and patLocalId!=''">
+			and v.pat_local_id=#{patLocalId,jdbcType=VARCHAR}	
+		</if>
+		<if test="inpatientNo!=null and inpatientNo!=''">
+			and v.inpatient_no=#{inpatientNo,jdbcType=VARCHAR}	
+		</if>
+		<if test="outpatientNo!=null and outpatientNo!=''">
+			and v.outpatient_no=#{outpatientNo,jdbcType=VARCHAR}	
+		</if>
+		<if test="startTime!=null and startTime!=''">
+			<![CDATA[ 
+			and v.exam_date>=#{startTime,jdbcType=VARCHAR}
+			]]>
+		</if>
+		<if test="endTime!=null and endTime!=''">
+			<![CDATA[ 
+			and v.exam_date<=#{endTime,jdbcType=VARCHAR}
+			]]>
+		</if>
+		<if test="startApm!=null and startApm!=''">
+			<![CDATA[ 
+			and v.exam_time>=#{startApm,jdbcType=VARCHAR}
+			]]>
+		</if>
+		<if test="endApm!=null and endApm!=''">
+			<![CDATA[ 
+			and v.exam_time<=#{endApm,jdbcType=VARCHAR}
+			]]>
+		</if>
+		<if test="device!=null and device!=''"> 
+			and v.device=#{device,jdbcType=VARCHAR}
+		</if>
+		<if test="examClassList!=null">
+			and v.exam_class in
+			<foreach collection="examClassList" item="item"
+				index="index" open="(" close=")" separator=",">
+				#{item.examClassName}
+			</foreach>
+		</if>
+		 <!-- 名字模糊查询-->
+		<if test="name!=null and name!=''">
+			and v.name like CONCAT(CONCAT('%', #{name,jdbcType=VARCHAR}), '%') 
+		</if>
+		<if test="icCard!=null and icCard!=''">
+			and v.ic_card=#{icCard,jdbcType=VARCHAR}
+		</if>
+		<if test="miCard!=null and miCard!=''">
+			and v.mi_card=#{miCard,jdbcType=VARCHAR}
+		</if>
+		<if test="identityCard!=null and identityCard!=''">
+			and v.identity_card=#{identityCard,jdbcType=VARCHAR}
+		</if>
+		order by v.exam_date desc , v.exam_time desc
+	</select>
+	
+	<select id="findCaseHistoryCount" parameterType="PageQuery" resultType="int">
+		select count(*)
+		from v_exam_patient_rpt v, dict_hospital h	
+		where v.hospital_code=h.hospital_code(+)		
+		<if test="hospitalCode!=null and hospitalCode!=''">
+			and v.hospital_code=#{hospitalCode,jdbcType=VARCHAR}	
+		</if>
+		<if test="examClass!=null and examClass!=''">
+			and v.exam_class=#{examClass,jdbcType=VARCHAR}
+		</if>
+		<if test="examSubClass!=null and examSubClass!=''">
+			and v.exam_sub_class=#{examSubClass,jdbcType=VARCHAR}
+		</if>
+		<if test="deptCode!=null and deptCode!=''">
+			and v.perform_dept=#{deptCode,jdbcType=VARCHAR}	
+		</if>
+		<if test="sickId!=null and sickId!=''">
+			and v.sick_id=#{sickId,jdbcType=VARCHAR}
+		</if>
+		<if test="isRelative==null or isRelative==false">						
+			<if test="examNo!=null and examNo!=''">
+				and v.exam_no=#{examNo,jdbcType=VARCHAR}
+			</if>
+		</if>
+		<if test="isRelative!=null and isRelative==true">						
+			<if test="examNo!=null and examNo!=''">
+				and v.exam_no!=#{examNo,jdbcType=VARCHAR}
+			</if>
+		</if>
+		<if test="reqDept!=null and reqDept!=''">
+			and v.req_dept=#{reqDept,jdbcType=VARCHAR}	
+		</if>
+		<if test="reqDepts!=null and reqDepts.size()>0">
+			and v.req_dept in
+			<foreach collection="reqDepts" open="(" close=")" separator="," item="it">
+			  #{it.deptCode,jdbcType=VARCHAR}
+			</foreach>
+		</if>
+		<if test="reqPhysician!=null and reqPhysician!=''">
+			and v.req_physician=#{reqPhysician,jdbcType=VARCHAR}	
+		</if>
+		<if test="patientSource!=null and patientSource!=''">
+			and v.patient_source=#{patientSource,jdbcType=VARCHAR}	
+		</if>
+		<if test="register!=null and register!=''">
+			and v.register=#{register,jdbcType=VARCHAR}	
+		</if>
+		<if test="patLocalId!=null and patLocalId!=''">
+			and v.pat_local_id=#{patLocalId,jdbcType=VARCHAR}	
+		</if>
+		<if test="inpatientNo!=null and inpatientNo!=''">
+			and v.inpatient_no=#{inpatientNo,jdbcType=VARCHAR}	
+		</if>
+		<if test="outpatientNo!=null and outpatientNo!=''">
+			and v.outpatient_no=#{outpatientNo,jdbcType=VARCHAR}	
+		</if>
+		<if test="startTime!=null and startTime!=''">
+			<![CDATA[ 
+			and v.exam_date>=#{startTime,jdbcType=VARCHAR}
+			]]>
+		</if>
+		<if test="endTime!=null and endTime!=''">
+			<![CDATA[ 
+			and v.exam_date<=#{endTime,jdbcType=VARCHAR}
+			]]>
+		</if>
+		<if test="startApm!=null and startApm!=''">
+			<![CDATA[ 
+			and v.exam_time>=#{startApm,jdbcType=VARCHAR}
+			]]>
+		</if>
+		<if test="endApm!=null and endApm!=''">
+			<![CDATA[ 
+			and v.exam_time<=#{endApm,jdbcType=VARCHAR}
+			]]>
+		</if>
+		<if test="device!=null and device!=''"> 
+			and v.device=#{device,jdbcType=VARCHAR}
+		</if>
+		<if test="examClassList!=null">
+			and v.exam_class in
+			<foreach collection="examClassList" item="item"
+				index="index" open="(" close=")" separator=",">
+				#{item.examClassName}
+			</foreach>
+		</if>
+		<!-- 名字模糊查询 -->
+		<if test="name!=null and name!=''">
+			and v.name like  CONCAT(CONCAT('%', #{name,jdbcType=VARCHAR}), '%')
+		</if>
+		<if test="icCard!=null and icCard!=''">
+			and v.ic_card=#{icCard,jdbcType=VARCHAR}
+		</if>
+		<if test="miCard!=null and miCard!=''">
+			and v.mi_card=#{miCard,jdbcType=VARCHAR}
+		</if>
+		<if test="identityCard!=null and identityCard!=''">
+			and v.identity_card=#{identityCard,jdbcType=VARCHAR}
+		</if>	
+	</select>
+	
+	<select id="findImageList" parameterType="Studys" resultType="StudyImage">
+		select st.study_no studyNo, st.store_path storePath, st.study_uid studyUid, st.pat_local_id patLocalId, 
+			st.patient_name patientName, st.patient_sex patientSex, st.study_date studyDate, st.series_count seriesCount,
+			img.series_uid seriesUid, img.image_uid imageUid, img.image_number imageNumber, img.file_name fileName, 
+			img.key_flag keyFlag, img.series_number seriesNumber, st.modality modality,
+			img.file_format fileFormat, img.file_size fileSize, img.window_center windowCenter, img.window_width windowWidth,
+		      case when st.svr_name_two is not null then (select local_path from dict_servers s where s.svr_name=st.svr_name_two)
+		           when st.svr_name_one is not null then (select local_path from dict_servers s where s.svr_name=st.svr_name_one)
+		           else null
+		       end localPath
+		from studys st,study_image img
+		where st.study_no=img.study_no 
+		<if test="commonImage==true">
+			and img.key_flag!='4'
+		</if>
+		and st.study_no=#{studyNo,jdbcType=VARCHAR}
+		<if test="studySeriesUid!=null">
+		  and img.series_Uid in
+		  <foreach collection="studySeriesUid" open="(" close=")" separator="," item="it">
+		   #{it,jdbcType=VARCHAR}
+		  </foreach>
+		</if>
+		order by to_number(series_number) , to_number(image_number)
+	</select>
+	
+	<select id="findReport" parameterType="PageRpt" resultType="PageRpt">
+		select ex.pat_local_id patLocalId, ex.sick_id sickId, ex.name,
+			ex.sex, ex.age, ex.exam_date examDate, ex.req_dept_name reqDeptName,
+			ex.bed_no bedNo, ex.inpatient_no inpatientNo, ex.outPatient_no outPatientNo,
+			ex.exam_class examClass,
+			rpt.description, rpt.impression, rpt.reporter, rpt.affirm_reporter affirmReporter,
+			rpt.report_date reportDate,
+			hosp.hospital_name hospitalName
+		from exams ex, exam_rpt rpt, dict_hospital hosp
+		where ex.exam_no=rpt.exam_no 
+			and ex.hospital_code=hosp.hospital_code(+)
+			and ex.exam_no=#{examNo,jdbcType=VARCHAR}
+			and rpt.report_no=#{reportNo,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="findExamOrgansByExamNos" parameterType="ExamOrgan" resultType="ExamOrgan">
+		select exam_no examNo, organ_no organNo, organ_name organName
+		from exam_organ
+		where  exam_no in ${examNo}
+	</select>
+	
+	<select id="findExamItemsByExamNos" parameterType="ExamItem" resultType="ExamItem">
+		select exam_no examNo, item_no itemNo, item_code itemCode, 
+			item_name itemName, cost, charge, amount
+		from exam_item
+		where exam_no in ${examNo}
+	</select>
+	
+	<select id="findExamOrgansByExamNo" parameterType="ExamOrgan" resultType="ExamOrgan">
+		select exam_no examNo, organ_no organNo, organ_name organName
+		from exam_organ
+		where  exam_no=#{examNo,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="findExamItemsByExamNo" parameterType="ExamItem" resultType="ExamItem">
+		select exam_no examNo, item_no itemNo, item_code itemCode, 
+			item_name itemName, cost, charge, amount
+		from exam_item
+		where exam_no=#{examNo,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="findImageInfo" parameterType="PageImageInfo" resultType="PageImageInfo">
+		select svr.ip_addr ipAddr, svr.read_user userId, svr.read_pwd password, svr.clinic_trans_type clinicTransType, svr.share_name shareName,
+			st.study_no studyNo, st.image_count imageCount, st.patient_name name, st.store_path storePath,
+			es.exam_no examNo, svr.read_pwd_encrypt passwordEncrypt,
+			svr.port ftpPort
+		from dict_servers svr, (
+			select study_no, image_count, patient_name, store_path,
+				nvl(svr_name_two,svr_name_one) svr_name
+			from studys
+			where study_no=#{studyNo,jdbcType=VARCHAR}
+		) st, exam_study es
+		where svr.svr_name=st.svr_name and st.study_no=es.study_no and rownum=1
+	</select>
+	
+	<select id="findExamStudyByApplyNo" parameterType="PageExamStudy" resultType="PageExamStudy">
+		select * from (
+			select exam_no examNo, study_no studyNo, rownum num
+			from exam_study 
+			where 
+				exam_no in (
+					select exam_no 
+					from exams 
+					where					
+						apply_no = #{applyNo,jdbcType=VARCHAR}
+					and 
+						exam_status>='40'
+				)
+			) where num=1	
+	</select>
+	
+	<select id="findExamStudyByExamNo" parameterType="PageExamStudy" resultType="PageExamStudy">
+		select exam_no examNo, study_no studyNo 
+		from exam_study
+		where exam_no=#{examNo,jdbcType=VARCHAR}
+		and rownum=1
+	</select>
+	
+	<select id="findExamNoByApplyNo" parameterType="String" resultType="String">
+		select exam_no from v_exams
+		where rownum=1
+		and apply_no=#{applyNo,jdbcType=VARCHAR}
+		and exam_status>='50'
+	</select>
+	<select id="findExamNoByOrderNo" parameterType="String" resultType="String">
+		select v.exam_no from exam_item i,v_exams v
+		where rownum=1
+		and v.exam_no=i.exam_no
+		and order_no=#{orderNo,jdbcType=VARCHAR}
+	</select>
+	<select id="getStudyImageName" resultType="java.lang.String" parameterType="hashmap">
+		 select t.file_name fileName from study_image t 
+		 where t.study_no=#{studyNo,jdbcType=VARCHAR}
+		 and t.series_Uid in
+		 <foreach collection="series" open="(" close=")" separator="," item="it">
+		 #{it,jdbcType=VARCHAR}
+		 </foreach>
+	</select>
+</mapper>

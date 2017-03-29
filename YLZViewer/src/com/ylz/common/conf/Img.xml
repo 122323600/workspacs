@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylz.common.mapper.ImageMapper">
+	<!-- <cache readOnly="true" flushInterval="1800000"/> -->
+	
+	<select id="findBySerieUid" parameterType="java.lang.String" resultType="Image">
+		select
+			s.image_uid imageUid,
+			s.image_number imageNumber,
+			s.file_name fileName,
+			s.key_flag keyFlag,
+			s.sop_class_uid sopClassUid,
+			s.ref_image_uid refImageUid,
+			s.file_format fileFormat,
+			s.file_size fileSize,
+			s.window_center windowCenter,
+			s.window_width windowWidth
+		from study_image s
+		where series_uid=#{seriesUid,jdbcType=VARCHAR}
+		order by to_number(image_number)
+	</select>
+	
+	<select id="findCommonImageBySerieUid" parameterType="Serie" resultType="Image">
+		select
+			s.image_uid imageUid,
+			s.image_number imageNumber,
+			s.file_name fileName,
+			s.key_flag keyFlag,
+			s.sop_class_uid sopClassUid,
+			s.ref_image_uid refImageUid,
+			s.file_format fileFormat,
+			s.file_size fileSize,
+			s.window_center windowCenter,
+			s.window_width windowWidth
+		from study_image s
+		where series_uid=#{seriesUid,jdbcType=VARCHAR}
+		and s.key_flag!=4
+		order by to_number(image_number)
+	</select>
+</mapper>

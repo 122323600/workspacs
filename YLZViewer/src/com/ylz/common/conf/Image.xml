@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylz.common.mapper.ExamImageMapper">
+	<!-- <cache readOnly="true" flushInterval="1800000"/> -->
+	
+	<select id="getPrivateImageCount" parameterType="java.lang.String" resultType="int">
+		select
+			count(*)
+		from study_image
+		where study_no=#{studyNo,jdbcType=VARCHAR}	
+		and key_flag='4'	
+	</select>
+	
+	<select id="getUnPrivateImages" parameterType="java.lang.String" resultType="java.lang.String">
+		select
+			file_name fileName
+		from study_image
+		where study_no=#{studyNo,jdbcType=VARCHAR}	
+		and key_flag!='4'	
+	</select>
+	
+	<select id="findStudysByExamNo" parameterType="java.lang.String" resultType="Studys">
+		select
+			s.study_no studyNo,
+			s.patient_name patientName,
+			s.image_count imageCount,
+			s.series_count seriesCount,
+			s.key_image_count keyImageCount,
+			s.modality,
+			s.device_name deviceName,
+			s.study_description studyDescription,
+			s.study_date||' '||s.study_time studyTime 
+		from exam_study es, studys s
+		where es.study_no=s.study_no
+		and es.exam_no=#{examNo,jdbcType=VARCHAR}		
+	</select>
+	
+	<select id="findExamStudys" parameterType="ExamStudy" resultType="ExamStudy">
+		select
+			es.study_no studyNo,
+ 			es.exam_no examNo
+		from exam_study es
+		<where>
+			<if test="examNo!=null and examNo!=''">
+				es.exam_no=#{examNo,jdbcType=VARCHAR}	
+			</if>
+			<if test="studyNo!=null and studyNo!=''">
+				and es.study_no=#{studyNo,jdbcType=VARCHAR}	
+			</if>
+		</where>  	
+	</select>
+	<select id="findStudySeries" parameterType="ExamStudy" resultType="StudySeries">
+	     select 
+	         s.series_uid seriesUid,
+	         s.series_number seriesNumber,
+	         s.modality modality,
+	         s.image_count imageCount,
+	         s.series_description seriesDescription,
+	         s.study_no studyNo
+	     from study_series s, exam_study e
+	     where s.study_no=e.study_no
+	     <if test="studyNo!=null and studyNo!=''">
+			and s.study_no=#{studyNo,jdbcType=VARCHAR}
+		 </if>
+		 <if test="examNo!=null and examNo!=''">
+			and e.exam_no=#{examNo,jdbcType=VARCHAR}
+		 </if>
+		 order by s.series_number
+	</select>
+</mapper>

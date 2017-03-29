@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <!-- 启用系统日志:1启用，0禁用 -->
+    <IsWriteSysLog>0</IsWriteSysLog>
+    <!-- 启用用户功能权限限制:OperateAuthority-->
+    <OperateAuthority>1</OperateAuthority>
+    <!-- 通过检查号、姓名、住院号或门诊号查询无记录时忽略时间:1启用，0禁用 -->
+    <ignoreTime>1</ignoreTime>
+    <!-- 启用科室共享分组查询::0-关闭,1-开启-->
+    <shareGroup>1</shareGroup>
+    <!-- 查看报告延迟配置 -->
+    <reportDelay>
+         <!-- 状态：0不延迟，1延迟 -->
+         <status>1</status>
+         <!-- 延迟时间（min） -->
+         <time>60</time>
+         <!-- 检查类别:多项以英文半角逗号隔开 -->
+         <examClass>病理,超声</examClass>
+    </reportDelay>
+	<!-- 需要登录:0-关闭,1-开启 -->
+	<needlogin>1</needlogin>
+	<!-- 显示私有图像:0-关闭,1-开启 -->
+	<privateImage>0</privateImage>
+	<!-- 报告签名图像:0-关闭,1-开启 -->
+	<signImage>1</signImage>
+	<!-- 报告可编辑:0-关闭,1-开启 -->
+	<editable>0</editable>
+	<!-- 报告打印:0-关闭,1-开启 -->
+	<print>1</print>
+	<!-- 报告反馈:0-关闭,1-开启 -->
+	<feedback>1</feedback>
+	<!-- 临床已阅:0-关闭,1-开启 -->
+	<clinicRead>0</clinicRead>
+	<!-- 报告图文水印:[enabled]0-关闭,1-开启 [type]0-文字,1-图像 [top][left][bottom][right] 相对位置 [text]文字内容 or 图像路径-->
+	<watermark enabled="1" type="1" top="10" left="10" bottom="" right="">images/login/background.png</watermark>
+	<!--<watermark enabled="1" type="0" top="300" left="10" bottom="" right="">广州市妇女儿童医疗中心</watermark>-->
+	<!-- 报告未审核标记:[enabled]0-关闭,1-开启 -->
+	<checkmark enabled="1">[报告未审核]</checkmark>		
+	<!-- 图像本地路径 -->
+	<ImageLib>\\120.27.129.243\fjzl_cs</ImageLib>
+	<!--图像打开模式：0-默认控件+非控件简单版, 1-默认控件+非控件H5版, 2-默认非控件简单版, 3-默认非控件H5版 -->
+	<ImageMode>1</ImageMode>	
+	<!-- 设备类型：[modality] -->
+	<CT>
+		<!--窗宽窗位:标题,窗宽,窗位 -->
+		<item>头颅,100,40</item>
+		<item>骨骼,1000,400</item>
+		<item>鼻咽,300,40</item>
+		<item>胸部,400,40</item>
+		<item>肺部,1500,-700</item>
+		<item>腹部,400,40</item>
+		<item>肝脾,150,40</item>
+		<item>肾脏,250,30</item>
+		<item>胰腺,320,35</item>	
+		<item>四肢,300,40</item>	
+	</CT>	
+	<MR>
+		<item>头颅,100,40</item>
+		<item>骨骼,1000,400</item>
+		<item>鼻咽,300,40</item>
+		<item>胸部,400,40</item>
+		<item>肺部,1500,-700</item>
+	</MR>
+	<!-- 禁止另存为按钮：0-不禁止,1-禁止 -->
+	<forbidSaveAs>0</forbidSaveAs>
+	<!-- 复制到剪切板按钮：0-关闭,1-开启 -->
+	<copyToClipboard>1</copyToClipboard>
+	<!-- 打开本地图像按钮：0-关闭,1-开启 -->
+	<openLocalImage>1</openLocalImage>
+	<!-- 窗口控件模式：0-同一窗口打开,1-各自窗口打开 -->
+	<ctrlMultiMode>0</ctrlMultiMode>
+	<!-- 本地缓存图像按钮：0-关闭,1-开启 -->
+	<reserveImage>1</reserveImage>
+	<!-- 打开3D开关按钮：0-关闭,1-开启 -->
+	<verTD>1</verTD>
+	<!-- 第三方调用列表是否开启左侧查询条件栏：0-关闭,1-开启 -->
+	<criteria>0</criteria>
+	<!-- 默认检查类别下拉列表以及查询列表,逗号','隔开：[enabled]0-关闭,1-开启 -->
+	<ExamClasses enabled="0">CT,MR,超声</ExamClasses>
+	<!-- 调用SSO.dll开关：0-关闭,1-开启 -->
+	<SSODll>0</SSODll>
+</config>

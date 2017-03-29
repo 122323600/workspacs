@@ -1,0 +1,638 @@
+/*------------------------------------*\
+    $CONTENTS
+\*------------------------------------*/
+/**
+ * CONTENTS............登录页面index.jsp的CSS
+ * ELEMENT.............基本元素的样式
+ * CLASS...............class的样式
+ * ID..................id的样式
+ */
+
+/*------------------------------------*\
+    $ELEMENT
+\*------------------------------------*/
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+html{
+    scrollbar-face-color:#f6f6f6;
+    scrollbar-highlight-color:#fff;
+    scrollbar-shadow-color:#eeeeee;
+    scrollbar-3dlight-color:#eeeeee;
+    scrollbar-arrow-color:#000;
+    scrollbar-track-color:#fff;
+    scrollbar-darkshadow-color:#fff;
+}
+body{
+    position: relative;
+    background-color: black;
+    margin:0;
+    cursor:default;
+    min-height:500px;
+    min-width:800px;
+}
+h1,h2,h3,p,button,ul,li,a{
+    margin:0;
+    padding:0;
+    list-style-type: none;
+}
+a:hover{
+    background-color: transparent;
+    text-decoration: none;
+}
+a:visited{
+    color:#fff;
+    text-decoration: none;
+}
+a:link{
+    color:#fff;
+    text-decoration: none;
+}
+button{
+    background-color: transparent;
+    border:none;
+    color:#f3f3f3;
+    font-size:12px;
+    outline:none;
+}
+button:link{
+    color: transparent;
+}
+button:active{
+    color: transparent;
+}
+/*滚动条美化*/
+::-webkit-scrollbar {
+    width: 6px;
+    opacity: 0.6;
+    height:6px;
+}
+/* 这是针对缺省样式 (必须的) */
+::-webkit-scrollbar-track {
+    border-radius:50px;
+    /*background-color: #b46868;*/
+} /* 滚动条的滑轨背景颜色 */
+::-webkit-scrollbar-thumb {
+    border-radius:50px;
+    background-color: rgba(255, 255, 255, 0.8);
+} /* 滑块颜色 */
+
+::-webkit-scrollbar-button {
+} /* 滑轨两头的监听按钮颜色 */
+
+::-webkit-scrollbar-corner {
+} /* 横向滚动条和纵向滚动条相交处尖角的颜色 */
+/*------------------------------------*\
+    $CLASS
+\*------------------------------------*/
+.boardFunction{
+    position: absolute;
+    left:0;
+    top:0;
+    width:120px;
+    height:inherit;
+    background-color: #333333;
+    z-index:20;
+    min-height:500px;
+}
+.boardOrder{
+    position: absolute;
+    right:0;
+    top:0;
+    width:175px;
+    height: inherit;
+    background-color: #333333;
+    text-align: center;
+    min-height:500px;
+}
+.boardImage{
+    position: relative;
+    margin-left:120px;
+    height: inherit;
+    overflow: hidden;
+    min-height:500px;
+}
+#partShow-header{
+    color:#fff;
+    font-size: 16px;
+    font-weight: 500;
+}
+.part-title{
+    position:relative;
+    padding:5px 10px;
+    background-color: #a1a1a1;
+    font-weight: 600;
+    color:#fff;
+    /*font-family: "youyuan";*/
+    letter-spacing:2px;
+    border-top:1px #666 solid;
+    border-bottom:1px #666 solid;
+}
+.part-title:hover{
+    cursor:pointer;
+}
+.part-title-icon{
+    position: absolute;
+    right:10px;
+    top:8px;
+    font-size:16px;
+    transition: right 0.5s,transform 0.5s;
+}
+.part-body{
+    padding:2px 5px 5px 5px;
+    background-color: rgba(255,255,255,0.07);
+}
+.boardFunction-button{
+    height: 55px;
+    width:55px;
+}
+.boardFunction-button:hover{
+    background-color: #aaa;
+}
+.boardFunction-button span{
+    display:block;
+    margin-top: 24px;
+    /*margin-top:4px;*/
+}
+.boardFunction-button img{
+    width:20px;
+}
+.partOther{
+    position: absolute;
+    left: 10px;
+    bottom: 5px;
+    width: 110px;
+}
+.partOther .quit{
+    width:100%;
+    margin-top:5px;
+}
+.partOther .report{
+    width:100%;
+}
+#extendedBox{
+    display: none;
+    position: absolute;
+    background-color: #fafafa;
+    /*width: 100px;*/
+    height: 100px;
+    top: 42px;
+    left: 60px;
+    border-radius: 4px;
+    box-shadow: 0 0 7px 2px rgba(255,142,255,0.7);
+    padding:5px 0 0 5px;
+    z-index:10;
+    white-space: nowrap;
+    vertical-align: top;
+}
+.windowNum_div{
+    float:left;
+    margin-left:2px;
+    margin-top:2px;
+    width:26px;
+    height:26px;
+    background-color: #555;
+    border-radius: 2px;
+}
+.extendedBox-line{
+    display: inline-block;
+    height:52px;
+    width: 2px;
+    background-color: #333;
+    margin: 0 10px 0 5px;
+    vertical-align: top;
+}
+.extendedBox-button{
+    margin-right:5px ;
+    width:60px;
+    height: 52px;
+    background-color: rgba(85,85,85,1);
+    border-radius: 4px;
+    padding:5px 0;
+    vertical-align: top;
+}
+.extendedBox-button:hover{
+    background-color: rgba(170,170,170,0.8);
+}
+.extendedBox-button img{
+    width:20px;
+}
+.extendedBox-button span{
+    display: block;
+    margin-top: 24px;
+    /*margin-top:5px;*/
+}
+.extendedBox-textButton{
+    width:60px;
+    height: 52px;
+    padding: 5px 10px;
+    background-color: rgba(85,85,85,1);
+    border-radius: 4px;
+}
+.extendedBox-textButton:hover{
+    background-color: rgba(170,170,170,0.8);
+}
+.extendedBox-textButton.active{
+    background-color: rgba(170,170,170,0.8);
+}
+.extendedBox-textButton p {
+    width: 40px;
+    white-space: normal;
+}
+.buttonClick{
+    background-color:  rgba(170,170,170,0.8);
+}
+.window-li {
+    width:52px;
+    padding:5px;
+    cursor:default;
+}
+.window-li:hover{
+    background-color: #aaa;
+}
+#windowSetButton{
+    padding:4px;
+    border-radius: 2px;
+}
+/*------------------------------------*\
+    $panelImage
+\*------------------------------------*/
+.panelImage{
+    position:relative;
+    background-color:transparent;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.panelImage td{
+    padding:2px 0 0 2px;
+}
+.panelCanvas{
+    position: relative;
+    cursor:default;
+    overflow: hidden;
+    border: 1px solid #666;
+    z-index:10;
+}
+.panelCanvasOutside{
+    display: none;
+    position: absolute;
+    top:0;
+    left:0;
+    height:100%;
+    background-color: #000;
+    cursor:default;
+    overflow: hidden;
+    z-index:15;
+}
+    #outside-info{
+        position: absolute;
+        top:30px;
+        background-color: rgba(233,233,233,0.6);
+        color:#000;
+        font-size:14px;
+        padding:10px;
+        border-radius: 5px;
+    }
+.panelCanvas-header{
+    position: relative;
+    width:inherit;
+    height:5%;
+    background-color: rgba(128,128,128,0.9);
+}
+.closeCanvas{
+    position: absolute;
+    height: 100%;
+    right:0;
+    top:0;
+}
+.panelCanvas-header img{
+    height:100%;
+}
+.canvas-dicom{
+    position: absolute;
+    z-index:1;
+}
+.canvas-measure{
+    position: absolute;
+    z-index:10;
+}
+.canvas-positioningLine{
+    position: absolute;
+    z-index:5;
+}
+.canvas-lesionsPoint{
+    position: absolute;
+    z-index:5;
+}
+.canvas-note{
+    position: absolute;
+}
+.canvas-magnifier{
+    position: absolute;
+    background-color: white;
+    z-index:20;
+}
+.panelCanvas-direction{
+    position:absolute;
+    color:yellow;
+    font-size:20px;
+    font-weight: 600;
+}
+.panelCanvas-info{
+    display:none;
+    position: absolute;
+    color:#fff;
+    z-index:15;
+}
+.panelCanvas-top{
+    top:0;
+    left:50%;
+    margin-left:-5px;
+}
+.panelCanvas-right{
+    right:5px;
+    top:50%;
+    margin-top:-11px;
+}
+.panelCanvas-left{
+    left:10px;
+    top:50%;
+    margin-top:-11px;
+}
+.panelCanvas-down{
+    bottom:0;
+    left:50%;
+    margin-left:-5px;
+}
+.panelCanvas-staff-right{
+    top: 25%;
+    right:10px;
+}
+.panelCanvas-staff-length{
+    top:75%;
+    right:10px;
+}
+.panelCanvas-info p{
+    background-color: rgba(0,0,0,0.4);
+    float:left;
+    clear: both;
+}
+.panelCanvas-windowInfo{
+    bottom: 5px;
+    left:5px;
+}
+.panelCanvas-patientInfo{
+    top: 5px;
+    left:5px;
+}
+.panelCanvas-date{
+    bottom: 5px;
+    right:5px;
+}
+    .panelCanvas-date p{
+        float:right;
+    }
+.panelCanvas-study{
+    top: 5px;
+    right:5px;
+}
+.panelCanvas-study p{
+	float:right;
+}
+.panelText{
+    position: absolute;
+    top:0;
+    left:0;
+}
+.panelText textarea{
+    position: absolute;
+    border-radius: 4px;
+    border:1px solid rgba(255,99,21,0.6);
+    background-color:transparent;
+    color:rgba(250,244,61,1);
+    width:100px;
+}
+.errorBox{
+    position: absolute;
+    top:50%;
+    left:50%;
+    margin-left:-50px;
+    margin-top:-25px;
+    z-index:30;
+}
+.errorBox-info{
+    color:#fff;
+    font-family:"Microsoft YaHei";
+    font-weight: 600;
+    font-size:18px;
+}
+.functionBox{
+    position: absolute;
+    left:20px;
+    width:50px;
+    height:200px;
+    top:50%;
+    margin-top:-100px;
+    background-color:rgba(255,255,255,0.1);
+    border-radius: 5px;
+    z-index:20;
+}
+.functionBox:hover{
+    background-color:rgba(255,255,255,0.4);
+}
+#shapeTextMirror{
+    display: none;
+    white-space: nowrap
+}
+/*------------------------------------*\
+    $boardOrder
+\*------------------------------------*/
+.boardOrder{
+    color:#f3f3f3;
+}
+.patientInfo{
+    position: absolute;
+    bottom: 10px;
+    left:10px;
+    padding:10px;
+    font-size:14px;
+    color:#fff;
+}
+.patientInfo p{
+    padding:2px 0;
+}
+.patientInfo span{
+    background-color: rgba(0,0,0,0.7);
+    padding-right:10px;
+}
+.order-header{
+    padding:10px;
+    font-size:12px;
+}
+#order-downloadProgress{
+    margin:10px 0 0 0;
+}
+.order-info{
+    padding:0 10px 10px 10px;
+    overflow-y:auto;
+    -moz-overflow-y:auto;
+}
+.order-info-part{
+    position: relative;
+    border:1px solid #eee;
+    margin:10px auto;
+    padding:5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: rgba(255,255,255,0);
+    text-align: left;
+    font-size:13px;
+    height:75px;
+}
+.order-info-part:hover{
+    background-color: rgba(255,255,255,0.25);
+	border:1px solid #BFEFFF;
+}
+.order-info-part.order-info-active{
+    background-color: rgba(255,255,255,0.25);
+	border:1px solid #dd0000;;
+}
+.order-info-imgBox{
+    position: relative;
+    width:60px;
+    height:60px;
+}
+.order-info-img{
+    border-radius: 3px;
+    width:60px;
+}
+.order-info-canvas{
+    position: absolute;
+    left:5px;
+    top:5px;
+    z-index:10;
+}
+.order-info-no{
+    position: absolute;
+    top:5px;
+    left:80px;
+}
+.order-info-count{
+    position: absolute;
+    top:25px;
+    left:80px;
+}
+.order-info-modality{
+    position: absolute;
+    top:45px;
+    left:80px;
+}
+.order-info-imgCount{
+    position: absolute;
+    bottom:15px;
+    left:80px;
+}
+.order-info-progress {
+    position: relative;
+    height:4px;
+    margin:2px 0 0 0;
+}
+.boardFunction-buttonIcon {
+    position: absolute;
+    transform: matrix(0.2, 0, 0, 0.2, -22, -40);
+}
+.extendedBox-buttonIcon {
+    position: absolute;
+    transform: matrix(0.2, 0, 0, 0.2, -19, -40);
+}
+img{border:none}
+.angleIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 0;  }
+.angle-blackIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -100px;}
+.antiColorIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -200px;}
+.arrowIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -300px;}
+.backIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -400px;}
+.circleIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -500px;}
+.circle-blackIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -600px;}
+.cleanIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -700px;}
+.clean-blackIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -800px;}
+.closeIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -900px;}
+.closeReportIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -1000px;}
+.colorIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -1100px;}
+.cutIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -1200px;}
+.downloadIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -1300px;}
+.download-blackIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -1400px;}
+.fillStyleIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -1500px;}
+.forwardIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -1600px;}
+.hideIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -1700px;}
+.huIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -1800px;}
+.hu-blackIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -1900px;}
+.imageIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -2000px;}
+.imageJumpIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -2100px;}
+.imageRecoverIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -2200px;}
+.initializeIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -2300px;}
+.initialize-blackIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -2400px;}
+.jumpPageIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -2500px;}
+.jumpPage-blackIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -2600px;}
+.left90Icon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -2700px;}
+.lineIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -2800px;}
+.line-blackIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -2900px;}
+.lineColorIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -3000px;}
+.lineNoteIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -3100px;}
+.lineWidthIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -3200px;}
+.linkIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -3300px;}
+.link-blackIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -3400px;}
+.magnifierIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -3500px;}
+.measureIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -3600px;}
+.measureSelectIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -3700px;}
+.measureShowIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -3800px;}
+.measureShow-blackIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -3900px;}
+.moveIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -4000px;}
+.noneLinkIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -4100px;}
+.noteIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -4200px;}
+.orderLinkIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -4300px;}
+.originalIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -4400px;}
+.original-blackIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -4500px;}
+.patientIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -4600px;}
+.patientInfoIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -4700px;}
+.patientInfo-blackIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -4800px;}
+.patientShowIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -4900px;}
+.patientShow-blackIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -5000px;}
+.playIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -5100px;}
+.plusIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -5200px;}
+.pointerIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -5300px;}
+.pointer-blackIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -5400px;}
+.positionIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -5500px;}
+.preWindowSetIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -5600px;}
+.pseudoColorIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -5700px;}
+.pseudoColor-blackIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -5800px;}
+.quitIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -5900px;}
+.reloadAllIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -6000px;}
+.reportIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -6100px;}
+.right90Icon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -6200px;}
+.right90-blackIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -6300px;}
+.scaleIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -6400px;}
+.seriesImageIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -6500px;}
+.setWindowingIcon{width:100px; height:98px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -6600px;}
+.setWindowing-blackIcon{width:100px; height:98px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -6698px;}
+.siconIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -6796px;}
+.squareIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -6896px;}
+.square-blackIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -6996px;}
+.strokeStyleIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -7096px;}
+.swapPageIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -7196px;}
+.textColorIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -7296px;}
+.textNoteIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -7396px;}
+.turnIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -7496px;}
+.turn-blackIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -7596px;}
+.verticalIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -7696px;}
+.vertical-blackIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -7796px;}
+.viewIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -7896px;}
+.view-blackIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -7996px;}
+.viewWindowIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -8096px;}
+.windowIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -8196px;}
+.windowingIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -8296px;}
+.windowing-blackIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -8396px;}
+.windowSetIcon{width:100px; height:100px; background:url(../images/W3Cfuns_allbgs.png) no-repeat 0 -8496px;}

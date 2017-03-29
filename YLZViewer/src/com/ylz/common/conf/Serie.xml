@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylz.common.mapper.SerieMapper">
+	<!-- <cache readOnly="true" flushInterval="1800000"/> -->
+	
+	<select id="findByStudyNo" parameterType="java.lang.String" resultType="Serie">
+		select
+			s.series_uid seriesUid,
+			s.series_number seriesNumber,
+			s.image_count imageCount,
+			s.series_description seriesDescription
+		from study_series s
+		where study_no=#{studyNo,jdbcType=VARCHAR}
+		order by to_number(series_number)
+	</select>
+	
+	<select id="findByStudy" parameterType="Study" resultType="Serie">
+		select
+			s.series_uid seriesUid,
+			s.series_number seriesNumber,
+			s.image_count imageCount,
+			s.series_description seriesDescription
+		from study_series s
+		<where>
+			<if test="studyNo!=null and studyNo!=''">
+				study_no=#{studyNo,jdbcType=VARCHAR}
+			</if>
+			<if test="series!=null and series.size()>0">
+				and s.series_uid in
+				<foreach collection="series" open="(" close=")" separator="," item="it">
+				  #{it.seriesUid,jdbcType=VARCHAR}
+				</foreach>
+			</if>
+		</where>
+		order by to_number(series_number)
+	</select>
+</mapper>

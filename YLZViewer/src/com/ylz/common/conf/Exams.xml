@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylz.common.mapper.ExamMapper">
+	
+	<select id="findExamStudyByApplyNo" parameterType="PageExamStudy" resultType="PageExamStudy">
+		select exam_no examNo, apply_no applyNo
+		from exams
+		where 
+			apply_no = #{applyNo,jdbcType=VARCHAR}
+		and 
+			rownum=1
+	</select>
+</mapper>

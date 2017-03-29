@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylz.common.mapper.StudyMapper">
+	<!-- <cache readOnly="true" flushInterval="1800000"/> -->
+	
+	<select id="find" parameterType="java.lang.String" resultType="Study">
+		select
+			s.study_no studyNo,
+			s.study_id studyId,
+			s.study_uid studyUid,
+			s.study_date studyDate,
+			s.study_time studyTime,			
+			s.patient_name patientName,
+			s.patient_sex patientSex,
+			s.patient_age patientAge,			
+			s.pat_local_id patLocalId,			
+			s.modality modality,
+			s.aetitle,
+			s.series_count seriesCount,
+			s.key_image_count keyImageCount,			
+			s.store_path storePath,
+			case when s.svr_name_two is not null then (select local_path from dict_servers where svr_name=s.svr_name_two)
+			     when s.svr_name_one is not null then (select local_path from dict_servers where svr_name=s.svr_name_one)
+			     else null
+			end localPath		
+		from studys s
+		where study_no=#{studyNo,jdbcType=VARCHAR}
+	</select>
+</mapper>
