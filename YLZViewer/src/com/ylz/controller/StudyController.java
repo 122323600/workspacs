@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.reflect.TypeToken;
 import com.ylz.common.dto.Image;
 import com.ylz.common.dto.Serie;
 import com.ylz.common.dto.Study;
@@ -25,7 +24,6 @@ import com.ylz.common.mapper.SerieMapper;
 import com.ylz.common.mapper.StudyMapper;
 import com.ylz.dicom.dto.DicomImage;
 import com.ylz.dicom.service.DicomService;
-import com.ylz.dicom.utils.GsonUtil;
 import com.ylz.util.ConfigUtil;
 
 @Controller("studyController")
@@ -64,43 +62,32 @@ public class StudyController {
 	
 	@RequestMapping(value="/getStudy")
 	@ResponseBody
-	public Study getStudy(HttpServletRequest request){
-		Study s=GsonUtil.fromJson(request.getParameter("param"),new TypeToken<Study>(){});
+	public Study getStudy(HttpServletRequest request,String imagePath){
 		Study study=new Study();
-		study=studyMapper.find(s.getStudyNo());
-		if(study!=null){
+		//imagePath = "\\Refer\\20170316\\2017022114464144890\\2017031619535223610\\EMR";
+		if(StringUtils.isNotBlank(imagePath)){
 			List<Serie> series=new ArrayList<Serie>();
-			
-			/*for(int i=0; i<series.size(); i++){
-				if(StringUtils.isNotBlank(series.get(i).getSeriesUid())){
-					if(ConfigUtil.getPrivateImage()==false){//不打开私有图像
-						series.get(i).setImages(imageMapper.findCommonImageBySerieUid(series.get(i).getSeriesUid()));
-					}else{
-					}
-					System.out.println("============"+imageMapper.findBySerieUid(series.get(i).getSeriesUid()));
-					series.get(i).setImages(imageMapper.findBySerieUid(series.get(i).getSeriesUid()));
-				}
-			}*/
-			String filePath = ConfigUtil.getValue("ImageLib")+"\\Refer\\20170316\\2017022114464144890\\2017031619535223610\\EMR";
+			String filePath = ConfigUtil.getValue("ImageLib")+imagePath;
 			File file = new File(filePath);
 			File[] files = file.listFiles();
 			for(File f: files){
-				System.out.println("==========="+f.getAbsolutePath());
-				Serie serie = new Serie();
 				List<Image> images = new ArrayList<Image>();
 				Image image = new Image();
 				image.setFilePath(f.getAbsolutePath());
+				image.setFileName(f.getName());
 				images.add(image);
+				Serie serie = new Serie();
 				serie.setImages(images); 
 				serie.setSeriesNumber("1");
 				short st = 1;
 				serie.setImageCount(st);
 				series.add(serie);
 			}
-			String storePath = files[0].getAbsolutePath().replace(ConfigUtil.getValue("ImageLib"), "");
+			String storePath = imagePath;
 			study.setStorePath(storePath);
 			study.setLocalPath(ConfigUtil.getValue("ImageLib"));
 			study.setSeries(series);
+			study.setSeriesCount(2);
 		}
 		return study;
 	}

@@ -54,7 +54,7 @@ if(studySeries==null||"".equals(studySeries)||"null".equals(studySeries))studySe
 			var ctx = null, urls = {
 				getDicomData:"<%=basePath%>study/getData",
 				getJpeg:"<%=basePath%>study/getJpeg",
-				getStudy:"<%=basePath%>study/getStudy",
+				getStudy:"<%=basePath%>study/getStudy?imagePath=${param.imagePath}",
 				getInfo:"<%=basePath%>study/getInfo",
 			};
 			/**

@@ -104,7 +104,7 @@
             var state=image.state;
 			var img=$("#"+this.id).find('img');
 			console.info(modal.imageModal.imageData.filePath);
-			img.css('display','block').get(0).src=RemoteProxy.getJpegURL()+'?filePath='+modal.imageModal.imageData.filePath+"&windowWidth="+state.windowWidth+"&windowCenter="+state.windowCenter+"&rows="+ image.rows +"&columns="+ image.columns+"&inverse="+(state.antiColor?1:0);
+			img.css('display','block').get(0).src=RemoteProxy.getJpegURL()+'?filePath='+modal.imageModal.imageData.filePath+"\\"+image.fileName+"&windowWidth="+state.windowWidth+"&windowCenter="+state.windowCenter+"&rows="+ image.rows +"&columns="+ image.columns+"&inverse="+(state.antiColor?1:0);
 			//显示窗宽位信息
 			view.windowView.getWindowMethod(this.id,'showWindowingInfo',{w:state.windowWidth,c:state.windowCenter});
 			img.on('load',function(e){
@@ -971,7 +971,6 @@
         };
         //序列加载动画
         Series.prototype.loadProcess=function(imageNo){
-        	alert(1);
             this.loadNext.splice(this.loadNext.indexOf(imageNo),1);
             if(this.loadNext.length === 0) this.LOAD_STATE='finish';
             imageData.imageLoaded += 1;
@@ -1453,7 +1452,6 @@
         //私有方法
         //在视图上显示Series
         function appendSeries(){
-        	alert("====");
             //加载完后进行绘制
             systemStatus.set('singleSeriesSign',imageData.series.length === 1);//单序列判断
             if(imageData.series.length === 1){
@@ -1477,7 +1475,7 @@
                 }else{
                     if(data.series.length){
                         //数据重构造
-                        imageData.filePath=data.localPath+"\\"+data.storePath;//组合文件路径
+                        imageData.filePath=data.localPath+"\\"+data.storePath+"\\";//组合文件路径
                         tool._extend(imageData,data);
                         imageData.series=[];
                         //序列构造
