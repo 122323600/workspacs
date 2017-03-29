@@ -87,7 +87,7 @@ public class StudyController {
 			study.setStorePath(storePath);
 			study.setLocalPath(ConfigUtil.getValue("ImageLib"));
 			study.setSeries(series);
-			study.setSeriesCount(2);
+			study.setSeriesCount(files.length);
 		}
 		return study;
 	}
