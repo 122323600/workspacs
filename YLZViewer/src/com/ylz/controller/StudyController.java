@@ -91,7 +91,7 @@ public class StudyController {
 				Image image = new Image();
 				image.setFilePath(f.getAbsolutePath());
 				images.add(image);
-				serie.setImages(images);
+				serie.setImages(images); 
 				serie.setSeriesNumber("1");
 				short st = 1;
 				serie.setImageCount(st);
