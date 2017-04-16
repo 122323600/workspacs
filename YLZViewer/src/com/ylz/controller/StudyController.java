@@ -25,11 +25,13 @@ import com.ylz.common.mapper.StudyMapper;
 import com.ylz.dicom.dto.DicomImage;
 import com.ylz.dicom.service.DicomService;
 import com.ylz.util.ConfigUtil;
+import com.ylz.util.JsonUtil;
 
 @Controller("studyController")
 @RequestMapping("/study")
 public class StudyController {
-
+	private final static String ImageLib = ConfigUtil.getValue("ImageLib");
+	
 	@Autowired
 	@Qualifier("studyMapper")
 	private StudyMapper studyMapper;
@@ -62,32 +64,70 @@ public class StudyController {
 	
 	@RequestMapping(value="/getStudy")
 	@ResponseBody
-	public Study getStudy(HttpServletRequest request,String imagePath){
+	public Study getStudy(HttpServletRequest request,String imagePaths){
+		//imagePaths = "[\"/Refer/20170316/2017022114464144890/2017031619535223610/EMR\"]";
+		//imagePaths = "[\"/Refer/20170316/2017022114464144890/2017031619535223610/EMR/0001_000000_20140724_082301_29719_0\"]";
 		Study study=new Study();
-		//imagePath = "\\Refer\\20170316\\2017022114464144890\\2017031619535223610\\EMR";
-		if(StringUtils.isNotBlank(imagePath)){
-			List<Serie> series=new ArrayList<Serie>();
-			String filePath = ConfigUtil.getValue("ImageLib")+imagePath;
-			File file = new File(filePath);
-			File[] files = file.listFiles();
-			for(File f: files){
-				List<Image> images = new ArrayList<Image>();
-				Image image = new Image();
-				image.setFilePath(f.getAbsolutePath());
-				image.setFileName(f.getName());
-				images.add(image);
-				Serie serie = new Serie();
-				serie.setImages(images); 
-				serie.setSeriesNumber("1");
-				short st = 1;
-				serie.setImageCount(st);
-				series.add(serie);
+		if(StringUtils.isNotBlank(imagePaths)){
+			//json字符串转list
+			List<String> list = JsonUtil.json2List(imagePaths, String.class);
+			String storePath = "";
+			if(list!=null && list.size()>0){
+				File fl = new File(ImageLib+list.get(0));
+				if(fl.exists()){
+					if(fl.isDirectory()){
+						storePath = fl.getAbsolutePath();
+					}else{
+						storePath = fl.getParent();
+					}
+				}
+				List<Serie> series=new ArrayList<Serie>();
+				for(String imagePath:list){
+					//绝对路径
+					String filePath = ImageLib+imagePath;
+					File file = new File(filePath);
+					//判断文件或文件夹是否存在
+					if(file.exists()){
+						//判断是否是目录
+						if(file.isDirectory()){
+							File[] files = file.listFiles();
+							//判断目录下文件是否存在
+							if(files!=null){
+								for(File f: files){
+									List<Image> images = new ArrayList<Image>();
+									Image image = new Image();
+									image.setFilePath(f.getAbsolutePath());
+									image.setFileName(f.getName());
+									images.add(image);
+									Serie serie = new Serie();
+									serie.setImages(images); 
+									serie.setSeriesNumber("1");
+									short st = 1;
+									serie.setImageCount(st);
+									series.add(serie);
+								}
+							}
+						}else{
+							//文件形式
+							List<Image> images = new ArrayList<Image>();
+							Image image = new Image();
+							image.setFilePath(file.getAbsolutePath());
+							image.setFileName(file.getName());
+							images.add(image);
+							Serie serie = new Serie();
+							serie.setImages(images); 
+							serie.setSeriesNumber("1");
+							short st = 1;
+							serie.setImageCount(st);
+							series.add(serie);
+						}
+					}
+				}
+				study.setStorePath(storePath.replace(ImageLib, ""));
+				study.setLocalPath(ImageLib);
+				study.setSeries(series);
+				study.setSeriesCount(series.size());
 			}
-			String storePath = imagePath;
-			study.setStorePath(storePath);
-			study.setLocalPath(ConfigUtil.getValue("ImageLib"));
-			study.setSeries(series);
-			study.setSeriesCount(files.length);
 		}
 		return study;
 	}
