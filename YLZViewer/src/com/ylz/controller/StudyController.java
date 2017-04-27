@@ -24,6 +24,7 @@ import com.ylz.common.mapper.SerieMapper;
 import com.ylz.common.mapper.StudyMapper;
 import com.ylz.dicom.dto.DicomImage;
 import com.ylz.dicom.service.DicomService;
+import com.ylz.util.Base64Util;
 import com.ylz.util.ConfigUtil;
 import com.ylz.util.JsonUtil;
 
@@ -69,6 +70,7 @@ public class StudyController {
 		//imagePaths = "[\"/Refer/20170316/2017022114464144890/2017031619535223610/EMR/0001_000000_20140724_082301_29719_0\"]";
 		Study study=new Study();
 		if(StringUtils.isNotBlank(imagePaths)){
+			imagePaths = Base64Util.encode(imagePaths);
 			//json字符串转list
 			List<String> list = JsonUtil.json2List(imagePaths, String.class);
 			String storePath = "";
